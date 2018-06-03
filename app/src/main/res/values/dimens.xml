@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="myRidesTextPadding">15dp</dimen>
+    <dimen name="myRidesTextSize">15sp</dimen>
+    <dimen name="rideHeight">100dp</dimen>
+    <dimen name="rideImageLeftMargin">10dp</dimen>
+</resources>

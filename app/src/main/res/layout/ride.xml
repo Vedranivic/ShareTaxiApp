@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/rideHeight">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cvProfileImage"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:layout_marginLeft="@dimen/rideImageLeftMargin"
+        android:src="@color/colorAccent"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/llRoutes"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/cvProfileImage">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llInfo"
+        android:layout_width="144dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/llRoutes"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</RelativeLayout>

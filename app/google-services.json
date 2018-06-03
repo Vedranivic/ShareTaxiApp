@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "305138825685",
+    "firebase_url": "https://sharetaxi-a99a3.firebaseio.com",
+    "project_id": "sharetaxi-a99a3",
+    "storage_bucket": "sharetaxi-a99a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305138825685:android:dbeda4bd2a3f1a03",
+        "android_client_info": {
+          "package_name": "hr.ferit.vedran.sharetaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305138825685-v97ntoie05rvfb84aqjp6j11l4hjsiuu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hr.ferit.vedran.sharetaxi",
+            "certificate_hash": "dabaa4bc7aad49760bd892e1d919a601aec6cef8"
+          }
+        },
+        {
+          "client_id": "305138825685-ehsj2vi7i4p080l14v8r113qhtnf4l07.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "305138825685-ehsj2vi7i4p080l14v8r113qhtnf4l07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyUVMqPcg_CH9MDJObgvoa5c9BjwhXaYU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305138825685-ehsj2vi7i4p080l14v8r113qhtnf4l07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

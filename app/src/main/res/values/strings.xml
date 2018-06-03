@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Share Taxi</string>
+    <string name="MyRidesText">My rides</string>
+    <string name="AcceptedRidesText">Accepted rides</string>
+</resources>
