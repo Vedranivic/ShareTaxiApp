@@ -2,7 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/rideHeight">
+    android:layout_height="@dimen/rideHeight"
+    android:background="@color/colorWhite"
+    android:layout_marginTop="@dimen/rideItemMarginTop">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/cvProfileImage"
         android:layout_width="70dp"
@@ -17,7 +19,20 @@
         android:layout_width="160dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
+        android:gravity="center"
         android:layout_toEndOf="@+id/cvProfileImage">
+
+        <TextView
+            android:id="@+id/tvFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/tvTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
     </LinearLayout>
 

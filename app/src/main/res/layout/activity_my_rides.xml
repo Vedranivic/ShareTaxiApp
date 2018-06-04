@@ -1,45 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ListBackColor">
-
-    <TextView
-        android:id="@+id/tvMyRides"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/MyRidesText"
-        android:padding="@dimen/myRidesTextPadding"
-        android:textSize="@dimen/myRidesTextSize"
-        android:textStyle="bold"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvMyRides"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvMyRides"
-        android:background="@color/colorWhite"
-        />
-
-    <TextView
-        android:id="@+id/tvAcceptedRides"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNav"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/rvMyRides"
-        android:padding="@dimen/myRidesTextPadding"
-        android:text="@string/AcceptedRidesText"
-        android:textSize="@dimen/myRidesTextSize"
-        android:textStyle="bold"
-        />
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvAcceptedRides"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/rlRides"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/ListBackColor"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvMyRides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/myRidesTextPadding"
+                android:text="@string/MyRidesText"
+                android:textSize="@dimen/myRidesTextSize"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvMyRides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvMyRides"
+                android:elevation="@dimen/rideListElevation"
+
+                />
+
+            <TextView
+                android:id="@+id/tvAcceptedRides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/rvMyRides"
+                android:padding="@dimen/myRidesTextPadding"
+                android:text="@string/AcceptedRidesText"
+                android:textSize="@dimen/myRidesTextSize"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvAcceptedRides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAcceptedRides"
+                />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvAcceptedRides"
-        android:background="@color/colorWhite"
-        />
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@drawable/selector_bottom_nav"
+        app:itemTextColor="@drawable/selector_bottom_nav"
+        app:menu="@menu/bottom_bar_menu" />
 
 </RelativeLayout>
+
+
+
