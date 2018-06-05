@@ -11,4 +11,5 @@
     <dimen name="toBottomNavMargin">5dp</dimen>
     <dimen name="rideElevation">4dp</dimen>
     <dimen name="rideListElevation">4dp</dimen>
+    <dimen name="bottomNavElevation">4dp</dimen>
 </resources>

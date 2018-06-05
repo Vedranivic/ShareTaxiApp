@@ -1,5 +1,7 @@
 package hr.ferit.vedran.sharetaxi;
 
+import java.sql.Time;
+
 /**
  * Created by vedra on 3.6.2018..
  */

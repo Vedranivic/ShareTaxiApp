@@ -47,10 +47,6 @@ public class MyRidesActivity extends AppCompatActivity
 
     }
 
-    private void deleteRide(DataSnapshot dataSnapshot){
-
-    }
-
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {

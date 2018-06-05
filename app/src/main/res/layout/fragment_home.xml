@@ -16,7 +16,7 @@
         android:padding="@dimen/myRidesTextPadding"
         android:text="@string/MyRidesText"
         android:textSize="@dimen/myRidesTextSize"
-        android:textStyle="bold" />
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMyRides"
@@ -36,7 +36,7 @@
         android:padding="@dimen/myRidesTextPadding"
         android:text="@string/AcceptedRidesText"
         android:textSize="@dimen/myRidesTextSize"
-        android:textStyle="bold" />
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAcceptedRides"

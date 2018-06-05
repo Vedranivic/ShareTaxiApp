@@ -31,6 +31,7 @@
         android:layout_alignParentBottom="true"
         app:itemIconTint="@drawable/selector_bottom_nav"
         app:itemTextColor="@drawable/selector_bottom_nav"
+        android:elevation="@dimen/bottomNavElevation"
         app:menu="@menu/bottom_bar_menu" />
 
 </RelativeLayout>

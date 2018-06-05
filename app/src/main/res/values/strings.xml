@@ -2,5 +2,11 @@
     <string name="app_name">Share Taxi</string>
     <string name="MyRidesText">My rides</string>
     <string name="AcceptedRidesText">Accepted rides</string>
+    <string name="fromHintText">From</string>
+    <string name="toHintText">To</string>
+    <string name="timeHintText">Time</string>
+    <string name="passengersHintText">Passengers</string>
+    <string name="btCreateText">Create</string>
+    <string name="dateHintText">Date</string>
 
 </resources>
