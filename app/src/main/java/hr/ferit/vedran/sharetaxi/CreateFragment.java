@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import java.util.Calendar;
 
 import javax.microedition.khronos.egl.EGLDisplay;
@@ -76,7 +78,13 @@ public class CreateFragment extends Fragment{
     }
 
     private void createNewRide(){
-        etFrom.setText("NISTAAA");
+        if(etFrom.getText().toString().isEmpty()||
+                etTo.getText().toString().isEmpty()||
+                etPassengers.getText().toString().isEmpty()||
+                etDate.getText().toString().isEmpty()||
+                etTime.getText().toString().isEmpty()){
+            Toast.makeText(getContext(),"Please enter value for all fields.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showDatePicker() {
@@ -97,8 +105,9 @@ public class CreateFragment extends Fragment{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-
+            if(view.isShown()){
             etDate.setText(String.format("%s/%s/%s",String.valueOf(dayOfMonth),String.valueOf(monthOfYear+1),String.valueOf(year)));
+            }
         }
     };
 
@@ -124,7 +133,9 @@ public class CreateFragment extends Fragment{
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new DatePickerDialog(getActivity(), ondateSet, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),ondateSet,year,month,day);
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+            return datePickerDialog;
         }
     }
 }
