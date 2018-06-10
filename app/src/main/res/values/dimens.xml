@@ -4,12 +4,14 @@
     <dimen name="myRidesTextSize">15sp</dimen>
     <dimen name="rideHeight">100dp</dimen>
     <dimen name="rideImageLeftMargin">10dp</dimen>
-    <dimen name="rideItemMarginTop">5dp</dimen>
+    <dimen name="rideItemMarginTop">2dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="toBottomNavMargin">5dp</dimen>
     <dimen name="rideElevation">4dp</dimen>
-    <dimen name="rideListElevation">4dp</dimen>
+    <dimen name="rideListElevation">6dp</dimen>
     <dimen name="bottomNavElevation">4dp</dimen>
+    <dimen name="timeInfoMargin">5dp</dimen>
+    <dimen name="addressMarginStart">15dp</dimen>
 </resources>

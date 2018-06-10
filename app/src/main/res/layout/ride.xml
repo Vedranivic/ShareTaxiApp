@@ -16,33 +16,93 @@
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/llRoutes"
-        android:layout_width="160dp"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:layout_toEndOf="@+id/cvProfileImage">
 
         <TextView
             android:id="@+id/tvFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/addressMarginStart"
+            android:textSize="16sp"
             />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/addressMarginStart"
+            android:src="@drawable/ic_keyboard_arrow_down_dark_20dp"/>
         <TextView
             android:id="@+id/tvTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/addressMarginStart"
+            android:textSize="16sp"
             />
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/llInfo"
-        android:layout_width="144dp"
+        android:layout_width="55dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/llRoutes"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/timeInfoMargin"
+            android:layout_marginBottom="@dimen/timeInfoMargin"
+            android:layout_below="@id/tvDate"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivPassengerIcon"
+            android:layout_below="@id/tvTime"
+            android:src="@drawable/ic_people_dark_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvPassengers"
+            android:layout_below="@id/tvTime"
+            android:layout_toEndOf="@id/ivPassengerIcon"
+            android:textSize="16sp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/llInfo">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:src="@drawable/ic_edit_blue_30dp"
+            android:layout_marginBottom="15dp"
+            />
+        <ImageButton
+            android:id="@+id/ibDeleteMyRide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:src="@drawable/ic_cancel_blue_30dp"
+            />
     </LinearLayout>
 </RelativeLayout>

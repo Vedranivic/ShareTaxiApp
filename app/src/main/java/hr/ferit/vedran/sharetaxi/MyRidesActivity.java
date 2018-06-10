@@ -38,13 +38,6 @@ public class MyRidesActivity extends AppCompatActivity
         BottomNavigationView navigation = findViewById(R.id.bottomNav);
         navigation.setSelectedItemId(R.id.navigation_home);
         navigation.setOnNavigationItemSelectedListener(this);
-
-/*        String addressFrom = "Zupanijska 4";
-        String addressTo = "Istarska 5";
-        Ride ride = new Ride(addressFrom, addressTo);
-        databaseReference.push().setValue(ride);*/
-
-
     }
 
     private boolean loadFragment(Fragment fragment) {
