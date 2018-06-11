@@ -8,5 +8,6 @@
     <string name="passengersHintText">Passengers</string>
     <string name="btCreateText">Create</string>
     <string name="dateHintText">Date</string>
+    <string name="searchButtonText">Search</string>
 
 </resources>

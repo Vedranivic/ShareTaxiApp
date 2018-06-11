@@ -3,6 +3,7 @@ package hr.ferit.vedran.sharetaxi;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.icu.util.TimeZone;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.util.TimeFormatException;
@@ -108,7 +110,17 @@ public class CreateFragment extends Fragment{
                 }
                 BottomNavigationView navigation = getActivity().findViewById(R.id.bottomNav);
                 navigation.setSelectedItemId(R.id.navigation_home);
-                Toast.makeText(getContext(),"Your ride has been posted.",Toast.LENGTH_SHORT).show();
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setTitle("Your ride has been posted!");
+                alertDialog.setMessage("Wait for someone to accept your ride.");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                //Toast.makeText(getContext(),"Your ride has been posted.",Toast.LENGTH_SHORT).show();
             }
             catch (Exception e){
                 Toast.makeText(getContext(),"Data could not be written. Try again later.",Toast.LENGTH_SHORT).show();

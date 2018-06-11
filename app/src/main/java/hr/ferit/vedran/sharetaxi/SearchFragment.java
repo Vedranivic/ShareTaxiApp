@@ -36,42 +36,7 @@ public class SearchFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home,container,false);
-        rvMyRides = (RecyclerView)view.findViewById(R.id.rvMyRides);
-        myRidesLinearLayoutManager = new LinearLayoutManager(getContext());
-        rvMyRides.setLayoutManager(myRidesLinearLayoutManager);
-
-        myRides = new ArrayList<Ride>();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Rides");
-
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //getAllRides(dataSnapshot);
-                Ride ride = dataSnapshot.getValue(Ride.class);
-                myRides.add(ride);
-
-                rvMyRidesAdapter = new MyRidesAdapter(getContext(), myRides);
-                rvMyRides.setAdapter(rvMyRidesAdapter);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_search,container,false);
 
         return view;
     }

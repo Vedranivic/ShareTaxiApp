@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_shape"
             android:layout_margin="5dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:hint="@string/fromHintText"/>
         <EditText
             android:id="@+id/etNewTo"
@@ -38,7 +38,7 @@
             android:layout_below="@id/etNewFrom"
             android:background="@drawable/edittext_shape"
             android:layout_margin="5dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:hint="@string/toHintText"/>
 
         <EditText
@@ -48,7 +48,7 @@
             android:layout_below="@id/etNewTo"
             android:background="@drawable/edittext_shape"
             android:layout_margin="5dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:inputType="number"
             android:hint="@string/passengersHintText"/>
 
@@ -60,7 +60,7 @@
             android:layout_alignParentStart="true"
             android:background="@drawable/edittext_shape"
             android:layout_margin="5dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:hint="@string/dateHintText"
             android:focusable="false"
             />
@@ -73,7 +73,7 @@
             android:layout_below="@id/etNewPassengers"
             android:layout_alignParentEnd="true"
             android:layout_margin="5dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:inputType="time"
             android:hint="@string/timeHintText"/>
 
@@ -82,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/etNewTime"
+            android:layout_centerHorizontal="true"
             android:backgroundTint="@color/colorAccent"
             android:text="@string/btCreateText"
             android:textColor="@color/colorWhite"/>

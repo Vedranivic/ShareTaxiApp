@@ -1,8 +1,10 @@
 package hr.ferit.vedran.sharetaxi;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,30 +73,53 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         holder.ibDeleteMyRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("Rides").child(ride.getId()).removeValue()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    //remove item from list alos and refresh recyclerview
-                                    rides.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, rides.size());
-
-                                    Toast.makeText(context,
-                                            "Your ride has been deleted.",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(context,
-                                            "Your ride cannot be deleted at the moment.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Are you sure you want to delete this ride?");
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
                             }
                         });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                deleteMyRide(ride, position);
+                            }
+                        });
+                alertDialog.show();
+
             }
         });
     }
+
+    private void deleteMyRide(Ride ride, final int position){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Rides").child(ride.getId()).removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //remove item from list alos and refresh recyclerview
+                            rides.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, rides.size());
+
+                            Toast.makeText(context,
+                                    "Your ride has been deleted.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context,
+                                    "Your ride cannot be deleted at the moment.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     @Override
     public int getItemCount() {
         return this.rides.size();

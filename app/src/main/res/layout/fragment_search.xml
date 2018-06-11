@@ -4,19 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlRidesS"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/ListBackColor"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvMyRidesS"
+        android:id="@+id/CreateNewRideText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:padding="@dimen/myRidesTextPadding"
-        android:text="Search for rides"
+        android:text="Search for a ride"
         android:textSize="@dimen/myRidesTextSize"
-        android:textStyle="bold" />
+        />
+    <RelativeLayout
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/CreateNewRideText">
 
+        <EditText
+            android:id="@+id/etSearchFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_shape"
+            android:layout_margin="5dp"
+            android:textSize="16sp"
+            android:hint="@string/fromHintText"/>
+        <EditText
+            android:id="@+id/etSearchTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etSearchFrom"
+            android:background="@drawable/edittext_shape"
+            android:layout_margin="5dp"
+            android:textSize="16sp"
+            android:hint="@string/toHintText"/>
+
+        <Button
+            android:id="@+id/btSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etSearchTo"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/searchButtonText"
+            android:textColor="@color/colorWhite"/>
+    </RelativeLayout>
 
 </RelativeLayout>
