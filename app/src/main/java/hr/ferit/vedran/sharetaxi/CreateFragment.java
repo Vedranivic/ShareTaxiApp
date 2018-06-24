@@ -3,6 +3,7 @@ package hr.ferit.vedran.sharetaxi;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.icu.util.TimeZone;
 import android.support.annotation.NonNull;
@@ -57,6 +58,7 @@ public class CreateFragment extends Fragment{
     @BindView(R.id.etNewDate) EditText etDate;
     @BindView(R.id.etNewTime) EditText etTime;
     @BindView(R.id.btCreateNew) Button btCreate;
+    private Context context;
 
     @Nullable
     @Override
@@ -67,6 +69,7 @@ public class CreateFragment extends Fragment{
 
         ButterKnife.bind(this, view);
         etDate.setInputType(InputType.TYPE_NULL);
+        context = getActivity().getApplicationContext();
 
         return view;
     }
@@ -93,13 +96,16 @@ public class CreateFragment extends Fragment{
         String passengers = etPassengers.getText().toString();
         String date = etDate.getText().toString();
         String time = etTime.getText().toString();
+//        final String USER_ID = context
+//                .getSharedPreferences("com.sharetaxi",Context.MODE_PRIVATE)
+//                .getString("UserID","0000");
 
         if(validateInput(from, to, passengers, date, time)){
             DatabaseReference databaseReference;
             databaseReference = FirebaseDatabase.getInstance().getReference();
             try{
                 String id = databaseReference.child("Rides").push().getKey();
-                Ride ride = new Ride(id,from,to,passengers,date,time);
+                Ride ride = new Ride(id,from,to,passengers,date,time, MyRidesActivity.USER_ID, null);
                 databaseReference.child("Rides").child(id).setValue(ride);
                 Fragment returnHome = new HomeFragment();
                 if (returnHome != null) {
@@ -157,7 +163,7 @@ public class CreateFragment extends Fragment{
         //Check date and time
         try {
             if (inputOK) {
-                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
                 Date dateValue = formatter.parse(date + " " + time);
                 java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Europe/Zagreb"));
                 Calendar calCurrent = Calendar.getInstance();
@@ -199,7 +205,7 @@ public class CreateFragment extends Fragment{
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             if(view.isShown()){
-            etDate.setText(String.format("%s/%s/%s",String.valueOf(dayOfMonth),String.valueOf(monthOfYear+1),String.valueOf(year)));
+            etDate.setText(String.format("%s/%s/%s",String.valueOf(dayOfMonth),String.valueOf(monthOfYear+1),String.valueOf(year).substring(2)));
             }
         }
     };

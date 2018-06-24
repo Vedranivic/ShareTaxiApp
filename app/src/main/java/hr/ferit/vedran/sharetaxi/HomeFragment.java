@@ -1,5 +1,6 @@
 package hr.ferit.vedran.sharetaxi;
 
+import android.content.Context;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -37,9 +38,9 @@ import butterknife.OnClick;
 public class HomeFragment extends Fragment {
 
     @BindView(R.id.rvMyRides) RecyclerView rvMyRides;
-    private MyRidesAdapter rvMyRidesAdapter;
     private DatabaseReference databaseReference;
     private List<Ride> myRides;
+    private Context context;
 
     @Nullable
     @Override
@@ -51,8 +52,9 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager myRidesLinearLayoutManager = new LinearLayoutManager(getContext());
         rvMyRides.setLayoutManager(myRidesLinearLayoutManager);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        getMyRides();
 
+        context = getActivity().getApplicationContext();
+        getMyRides();
         return view;
 }
 
@@ -61,10 +63,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 myRides = new ArrayList<Ride>();
+//                final String USER_ID = context
+//                        .getSharedPreferences("com.sharetaxi",Context.MODE_PRIVATE)
+//                        .getString("UserID","0000");
                 for(DataSnapshot rideSnap : dataSnapshot.getChildren()) {
-                    myRides.add(rideSnap.getValue(Ride.class));
+                    if(rideSnap.getValue(Ride.class).getOwnerId().equals(MyRidesActivity.USER_ID)){
+                        myRides.add(rideSnap.getValue(Ride.class));
+                    }
                 }
                 MyRidesAdapter rvMyRidesAdapter = new MyRidesAdapter(getContext(), myRides);
+                changeItemLayout(rvMyRidesAdapter);
                 rvMyRides.setAdapter(rvMyRidesAdapter);
             }
 
@@ -73,6 +81,12 @@ public class HomeFragment extends Fragment {
                 Log.e("FETCH DATA ERROR","Error populating RecyclerView");
             }
         });
+    }
+
+    private void changeItemLayout(MyRidesAdapter adapter){
+        adapter.ibDeleteVisibility = View.VISIBLE;
+        adapter.ibEditVisibility = View.VISIBLE;
+        adapter.ibAcceptVisibility = View.GONE;
     }
 
 }

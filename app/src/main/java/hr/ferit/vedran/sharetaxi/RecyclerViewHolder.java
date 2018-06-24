@@ -1,5 +1,6 @@
 package hr.ferit.vedran.sharetaxi;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,7 +24,9 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvPassengers) TextView tvPassengers;
     @BindView(R.id.tvDate) TextView tvDate;
     @BindView(R.id.tvTime) TextView tvTime;
-    @BindView(R.id.ibDeleteMyRide) ImageButton ibDeleteMyRide;
+    @BindView(R.id.ibDeleteRide) ImageButton ibDeleteRide;
+    @BindView(R.id.ibEditRide) ImageButton ibEditRide;
+    @BindView(R.id.ibAcceptRide) ImageButton ibAcceptRide;
 
     private List<Ride> rides;
 
@@ -32,4 +35,5 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this,itemView);
         this.rides = rides;
     }
+
 }

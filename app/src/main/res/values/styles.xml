@@ -8,5 +8,35 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SignInTheme" parent="FirebaseUI">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="buttonStyle">@style/AccentButton</item>
+
+    </style>
+
+    <style name="FirebaseUI.Button.AccountChooser.EmailButton">
+        <item name="drawableStartCompat">@drawable/fui_ic_mail_white_24dp</item>
+        <item name="android:background">@drawable/fui_idp_button_background_email</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="FirebaseUI.Button.AccountChooser.GoogleButton">
+        <item name="drawableStartCompat">@drawable/fui_ic_googleg_color_24dp</item>
+        <item name="android:background">@drawable/fui_idp_button_background_google</item>
+        <item name="android:backgroundTint">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AccentButton" parent="FirebaseUI.Button">
+        <item name="android:backgroundTint">@color/colorAccent</item>
+    </style>
+
 
 </resources>

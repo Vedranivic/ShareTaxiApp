@@ -9,5 +9,5 @@
     <string name="btCreateText">Create</string>
     <string name="dateHintText">Date</string>
     <string name="searchButtonText">Search</string>
-
+    <string name="tvMatchingRidesText">Matching Rides</string>
 </resources>
