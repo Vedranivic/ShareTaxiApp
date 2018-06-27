@@ -5,13 +5,29 @@
     android:layout_height="@dimen/rideHeight"
     android:background="@color/colorWhite"
     android:layout_marginTop="@dimen/rideItemMarginTop">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/cvProfileImage"
-        android:layout_width="70dp"
+    <LinearLayout
+        android:id="@+id/profileImageLayout"
+        android:orientation="vertical"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        android:layout_marginLeft="@dimen/rideImageLeftMargin"
-        android:src="@color/colorAccent"/>
+        android:paddingStart="@dimen/rideImageLeftMargin"
+        android:paddingEnd="0dp"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cvProfileImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/ListBackColor"
+            android:src="@drawable/profile_default"/>
+        <TextView
+            android:id="@+id/tvOwnerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +36,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical"
-        android:layout_toEndOf="@+id/cvProfileImage">
+        android:layout_toEndOf="@+id/profileImageLayout">
 
         <TextView
             android:id="@+id/tvFrom"
@@ -33,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/addressMarginStart"
-            android:src="@drawable/ic_keyboard_arrow_down_dark_20dp"/>
+            android:src="@drawable/ic_arrow"/>
         <TextView
             android:id="@+id/tvTo"
             android:layout_width="wrap_content"
@@ -105,6 +121,14 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:src="@drawable/ic_check_circle_blue_24dp"
+            />
+        <ImageButton
+            android:id="@+id/ibSendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:src="@drawable/ic_send_24dp"
+            android:layout_marginBottom="15dp"
             />
         <ImageButton
             android:id="@+id/ibDeleteRide"

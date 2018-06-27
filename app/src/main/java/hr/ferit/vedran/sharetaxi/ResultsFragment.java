@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +57,7 @@ public class ResultsFragment extends Fragment {
     }
 
     private void getResults(){
-
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference.child("Rides")
                 .addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,7 +69,10 @@ public class ResultsFragment extends Fragment {
                 for(DataSnapshot rideSnap : dataSnapshot.getChildren()) {
                     ride = rideSnap.getValue(Ride.class);
                     if(ride.getFrom().toLowerCase().contains(from.toLowerCase())
-                            && ride.getTo().toLowerCase().contains(to.toLowerCase())) {
+                            && ride.getTo().toLowerCase().contains(to.toLowerCase())
+                            && !ride.getOwnerId().equals(user.getUid())
+                            && Integer.parseInt(ride.getPassengers())<8
+                            && !ride.getPassengerList().contains(user.getUid())) {
                         matchingRides.add(rideSnap.getValue(Ride.class));
                     }
                 }
@@ -88,5 +93,6 @@ public class ResultsFragment extends Fragment {
         adapter.ibDeleteVisibility = View.GONE;
         adapter.ibEditVisibility = View.GONE;
         adapter.ibAcceptVisibility = View.VISIBLE;
+        adapter.ibSendVisibility = View.GONE;
     }
 }

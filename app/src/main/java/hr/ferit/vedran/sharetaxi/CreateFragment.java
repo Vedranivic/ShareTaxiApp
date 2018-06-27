@@ -24,6 +24,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -96,16 +98,14 @@ public class CreateFragment extends Fragment{
         String passengers = etPassengers.getText().toString();
         String date = etDate.getText().toString();
         String time = etTime.getText().toString();
-//        final String USER_ID = context
-//                .getSharedPreferences("com.sharetaxi",Context.MODE_PRIVATE)
-//                .getString("UserID","0000");
+        FirebaseUser owner = FirebaseAuth.getInstance().getCurrentUser();
 
         if(validateInput(from, to, passengers, date, time)){
             DatabaseReference databaseReference;
             databaseReference = FirebaseDatabase.getInstance().getReference();
             try{
                 String id = databaseReference.child("Rides").push().getKey();
-                Ride ride = new Ride(id,from,to,passengers,date,time, MyRidesActivity.USER_ID, null);
+                Ride ride = new Ride(id,from,to,passengers,date,time, owner.getUid(),owner.getDisplayName(),null);
                 databaseReference.child("Rides").child(id).setValue(ride);
                 Fragment returnHome = new HomeFragment();
                 if (returnHome != null) {

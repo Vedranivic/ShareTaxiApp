@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by vedra on 3.6.2018..
  */
 
-public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+public class RideViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvFrom) TextView tvFrom;
     @BindView(R.id.tvTo) TextView tvTo;
     @BindView(R.id.tvPassengers) TextView tvPassengers;
@@ -27,10 +27,11 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.ibDeleteRide) ImageButton ibDeleteRide;
     @BindView(R.id.ibEditRide) ImageButton ibEditRide;
     @BindView(R.id.ibAcceptRide) ImageButton ibAcceptRide;
-
+    @BindView(R.id.tvOwnerName) TextView tvOwnerName;
+    @BindView(R.id.ibSendMessage) ImageButton ibSendMessage;
     private List<Ride> rides;
 
-    public RecyclerViewHolder (final View itemView, final List<Ride> rides){
+    public RideViewHolder(final View itemView, final List<Ride> rides){
         super(itemView);
         ButterKnife.bind(this,itemView);
         this.rides = rides;

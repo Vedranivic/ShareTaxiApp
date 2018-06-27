@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChatActivity"
+            android:icon="@drawable/ic_chat_bubble_24dp" android:label="My chats">
+        </activity>
     </application>
 
 </manifest>

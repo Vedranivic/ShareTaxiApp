@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,9 +39,10 @@ import butterknife.OnClick;
 public class HomeFragment extends Fragment {
 
     @BindView(R.id.rvMyRides) RecyclerView rvMyRides;
+    @BindView(R.id.rvAcceptedRides) RecyclerView rvAcceptedRides;
     private DatabaseReference databaseReference;
     private List<Ride> myRides;
-    private Context context;
+    private List<Ride> acceptedRides;
 
     @Nullable
     @Override
@@ -49,12 +51,16 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         ButterKnife.bind(this,view);
+
         LinearLayoutManager myRidesLinearLayoutManager = new LinearLayoutManager(getContext());
         rvMyRides.setLayoutManager(myRidesLinearLayoutManager);
+        LinearLayoutManager acceptedRidesLinearLayoutManager = new LinearLayoutManager(getContext());
+        rvAcceptedRides.setLayoutManager(acceptedRidesLinearLayoutManager);
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        context = getActivity().getApplicationContext();
         getMyRides();
+        getAcceptedRides();
         return view;
 }
 
@@ -63,16 +69,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 myRides = new ArrayList<Ride>();
-//                final String USER_ID = context
-//                        .getSharedPreferences("com.sharetaxi",Context.MODE_PRIVATE)
-//                        .getString("UserID","0000");
+                final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for(DataSnapshot rideSnap : dataSnapshot.getChildren()) {
-                    if(rideSnap.getValue(Ride.class).getOwnerId().equals(MyRidesActivity.USER_ID)){
+                    if(rideSnap
+                            .getValue(Ride.class)
+                            .getOwnerId()
+                            .equals(USER_ID)){
                         myRides.add(rideSnap.getValue(Ride.class));
                     }
                 }
                 MyRidesAdapter rvMyRidesAdapter = new MyRidesAdapter(getContext(), myRides);
-                changeItemLayout(rvMyRidesAdapter);
+                changeItemLayout(rvMyRidesAdapter, R.id.rvMyRides);
                 rvMyRides.setAdapter(rvMyRidesAdapter);
             }
 
@@ -83,10 +90,49 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void changeItemLayout(MyRidesAdapter adapter){
-        adapter.ibDeleteVisibility = View.VISIBLE;
-        adapter.ibEditVisibility = View.VISIBLE;
-        adapter.ibAcceptVisibility = View.GONE;
+    private void getAcceptedRides() {
+        databaseReference.child("Rides").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                acceptedRides = new ArrayList<Ride>();
+                final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                Ride ride;
+                ArrayList<String> passengerList;
+                for(DataSnapshot rideSnap : dataSnapshot.getChildren()) {
+                    ride = rideSnap.getValue(Ride.class);
+                    passengerList = ride.getPassengerList();
+                    for(String userId : passengerList)
+                        if(userId.equals(USER_ID)){
+                            acceptedRides.add(rideSnap.getValue(Ride.class));
+                        }
+                }
+                MyRidesAdapter rvAcceptedRidesAdapter = new MyRidesAdapter(getContext(), acceptedRides);
+                changeItemLayout(rvAcceptedRidesAdapter, R.id.rvAcceptedRides );
+                rvAcceptedRides.setAdapter(rvAcceptedRidesAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FETCH DATA ERROR","Error populating RecyclerView");
+            }
+        });
+    }
+
+    private void changeItemLayout(MyRidesAdapter adapter, int rvID){
+        if(rvID == R.id.rvMyRides) {
+            //for My Ride
+            adapter.ibDeleteVisibility = View.VISIBLE;
+            adapter.ibEditVisibility = View.VISIBLE;
+            adapter.ibAcceptVisibility = View.GONE;
+            adapter.ibSendVisibility = View.GONE;
+        }
+        else{
+            //for Accepted Ride
+            adapter.ibDeleteVisibility = View.VISIBLE;
+            adapter.ibSendVisibility = View.VISIBLE;
+            adapter.ibEditVisibility = View.GONE;
+            adapter.ibAcceptVisibility = View.GONE;
+        }
     }
 
 }
