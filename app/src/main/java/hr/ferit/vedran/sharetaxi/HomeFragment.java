@@ -1,7 +1,5 @@
 package hr.ferit.vedran.sharetaxi;
 
-import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,12 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,12 +23,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import hr.ferit.vedran.sharetaxi.model.Ride;
 
-
-/**
- * Created by vedra on 4.6.2018..
- */
 
 public class HomeFragment extends Fragment {
 
@@ -46,16 +36,11 @@ public class HomeFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         ButterKnife.bind(this,view);
-
-        LinearLayoutManager myRidesLinearLayoutManager = new LinearLayoutManager(getContext());
-        rvMyRides.setLayoutManager(myRidesLinearLayoutManager);
-        LinearLayoutManager acceptedRidesLinearLayoutManager = new LinearLayoutManager(getContext());
-        rvAcceptedRides.setLayoutManager(acceptedRidesLinearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -65,10 +50,12 @@ public class HomeFragment extends Fragment {
 }
 
     private void getMyRides(){
+        LinearLayoutManager myRidesLinearLayoutManager = new LinearLayoutManager(getContext());
+        rvMyRides.setLayoutManager(myRidesLinearLayoutManager);
         databaseReference.child("Rides").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myRides = new ArrayList<Ride>();
+                myRides = new ArrayList<>();
                 final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for(DataSnapshot rideSnap : dataSnapshot.getChildren()) {
                     if(rideSnap
@@ -78,7 +65,7 @@ public class HomeFragment extends Fragment {
                         myRides.add(rideSnap.getValue(Ride.class));
                     }
                 }
-                MyRidesAdapter rvMyRidesAdapter = new MyRidesAdapter(getContext(), myRides);
+                MyRidesAdapter rvMyRidesAdapter = new MyRidesAdapter(getActivity(), myRides);
                 changeItemLayout(rvMyRidesAdapter, R.id.rvMyRides);
                 rvMyRides.setAdapter(rvMyRidesAdapter);
             }
@@ -91,10 +78,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void getAcceptedRides() {
+        LinearLayoutManager acceptedRidesLinearLayoutManager = new LinearLayoutManager(getContext());
+        rvAcceptedRides.setLayoutManager(acceptedRidesLinearLayoutManager);
         databaseReference.child("Rides").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                acceptedRides = new ArrayList<Ride>();
+                acceptedRides = new ArrayList<>();
                 final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Ride ride;
                 ArrayList<String> passengerList;

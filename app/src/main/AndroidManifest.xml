@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="hr.ferit.vedran.sharetaxi">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".MyRidesActivity"
             android:windowSoftInputMode="adjustPan">
@@ -20,9 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatActivity"
-            android:icon="@drawable/ic_chat_bubble_24dp" android:label="My chats">
+        <activity
+            android:name=".ChatActivity"
+            android:icon="@drawable/ic_chat_bubble_24dp"
+            android:label="Chat">
         </activity>
+        <activity
+            android:name=".ConversationsActivity"
+            android:icon="@drawable/ic_chat_bubble_24dp"
+            android:label="My chats">
+        </activity>
+        <service
+            android:name=".MyLocationIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

@@ -1,9 +1,13 @@
 package hr.ferit.vedran.sharetaxi;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,50 +32,53 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by vedra on 3.6.2018..
- */
+import hr.ferit.vedran.sharetaxi.model.Chat;
+import hr.ferit.vedran.sharetaxi.model.Ride;
+
 
 public class MyRidesAdapter extends RecyclerView.Adapter<RideViewHolder> {
     private List<Ride> rides;
-    protected Context context;
-    public int ibEditVisibility;
-    public int ibDeleteVisibility;
-    public int ibAcceptVisibility;
-    public int ibSendVisibility;
-    public String chatID;
+    private Context context;
+    int ibEditVisibility;
+    int ibDeleteVisibility;
+    int ibAcceptVisibility;
+    int ibSendVisibility;
+    private String chatID;
     private RecyclerView rv;
 
-    public MyRidesAdapter(Context context, List<Ride> rides) {
+    MyRidesAdapter(Context context, List<Ride> rides) {
         this.rides = rides;
         this.context = context;
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         rv = recyclerView;
     }
 
+    @NonNull
     @Override
-    public RideViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        RideViewHolder viewHolder = null;
+    public RideViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        RideViewHolder viewHolder;
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ride, parent, false);
         viewHolder = new RideViewHolder(layoutView, rides);
         return viewHolder;
     }
     @Override
-    public void onBindViewHolder(RideViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RideViewHolder holder, int position) {
+        final int pos = position;
         final Ride ride = rides.get(position);
         holder.tvFrom.setText(ride.getFrom());
         holder.tvTo.setText(ride.getTo());
         holder.tvTime.setText(ride.getTime());
         holder.tvPassengers.setText(ride.getPassengers());
-        holder.tvOwnerName.setText(ride.getOwnerName());
+        holder.tvOwnerName.setText(ride.getOwnerName().split(" (?!.* )")[0]);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         Calendar calToday = Calendar.getInstance();
         Calendar calRide = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat")
         DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
         try{
             Date dateValue = formatter.parse(ride.getDate());
@@ -83,6 +90,13 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RideViewHolder> {
         if(calRide.after(calToday)){
             holder.tvDate.setText(ride.getDate());
         }
+
+        holder.ibEditRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editRide(ride);
+            }
+        });
 
         holder.ibDeleteRide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +117,7 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RideViewHolder> {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
-                                    deleteMyRide(ride, position);
+                                    deleteMyRide(ride, pos);
                                 }
                             });
                     alertDialog.show();
@@ -139,14 +153,19 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RideViewHolder> {
             @Override
             public void onClick(View v) {
                 acceptRide(ride,user.getUid());
+                FragmentActivity activity = (FragmentActivity) context;
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,new HomeFragment())
+                        .commit();
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Ride has been accepted!");
-                alertDialog.setMessage("You have accepted a ride.Contact the ride's owner for details.\n\n(You can send the owner a direct message on a click of a button in your accepted ride)");
+                alertDialog.setMessage("You have accepted a ride.Contact the ride's owner for details." +
+                        "\n\n(You can send the owner a direct message on a click of a button in your accepted ride)");
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                context.startActivity(new Intent(context,MyRidesActivity.class));
                             }
                         });
                 alertDialog.show();
@@ -164,6 +183,18 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RideViewHolder> {
         holder.ibEditRide.setVisibility(ibEditVisibility);
         holder.ibDeleteRide.setVisibility(ibDeleteVisibility);
         holder.ibSendMessage.setVisibility(ibSendVisibility);
+    }
+
+    private void editRide(Ride ride){
+        FragmentActivity activity = (FragmentActivity)context;
+        Bundle bundle = new Bundle();
+        bundle.putString("Ride_ID",ride.getId());
+        Fragment createFragment = new CreateFragment();
+        createFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, createFragment)
+                .commit();
     }
 
     private void cancelRide(Ride ride, String USER_ID) {

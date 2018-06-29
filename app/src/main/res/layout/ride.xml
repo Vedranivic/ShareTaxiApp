@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/rideHeight"
     android:background="@color/colorWhite"
@@ -25,6 +26,7 @@
             android:id="@+id/tvOwnerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLength="11"
             android:textSize="12sp"
             />
     </LinearLayout>
@@ -44,18 +46,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/addressMarginStart"
             android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/addressMarginStart"
-            android:src="@drawable/ic_arrow"/>
+            android:src="@drawable/ic_arrow"
+            tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/tvTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/addressMarginStart"
             android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
             />
 
     </LinearLayout>
@@ -89,7 +94,8 @@
             android:src="@drawable/ic_people_dark_20dp"
             android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/tvPassengers"
             android:layout_below="@id/tvTime"
@@ -114,14 +120,14 @@
             android:background="@color/colorWhite"
             android:src="@drawable/ic_edit_blue_30dp"
             android:layout_marginBottom="15dp"
-            />
+            tools:ignore="ContentDescription" />
         <ImageButton
             android:id="@+id/ibAcceptRide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:src="@drawable/ic_check_circle_blue_24dp"
-            />
+            tools:ignore="ContentDescription" />
         <ImageButton
             android:id="@+id/ibSendMessage"
             android:layout_width="wrap_content"
@@ -129,13 +135,13 @@
             android:background="@color/colorWhite"
             android:src="@drawable/ic_send_24dp"
             android:layout_marginBottom="15dp"
-            />
+            tools:ignore="ContentDescription" />
         <ImageButton
             android:id="@+id/ibDeleteRide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:src="@drawable/ic_cancel_blue_30dp"
-            />
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 </RelativeLayout>

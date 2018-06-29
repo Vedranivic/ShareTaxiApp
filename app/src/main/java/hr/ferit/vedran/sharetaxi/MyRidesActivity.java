@@ -1,11 +1,9 @@
 package hr.ferit.vedran.sharetaxi;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,14 +11,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,15 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Optional;
+import hr.ferit.vedran.sharetaxi.model.Ride;
+import hr.ferit.vedran.sharetaxi.model.User;
 
 public class MyRidesActivity extends AppCompatActivity
                              implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -73,7 +67,7 @@ public class MyRidesActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.btChat) {
-            startActivity(new Intent(getApplicationContext(),ChatActivity.class));
+            startActivity(new Intent(getApplicationContext(),ConversationsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,9 +116,10 @@ public class MyRidesActivity extends AppCompatActivity
                     RC_SIGN_IN);
         }
         else{
+
             loadFragment(new HomeFragment());
             Toast.makeText(this,"Welcome back, "+FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),Toast.LENGTH_SHORT).show();
-            removeOldRides();
+            //removeOldRides();
         }
     }
 
@@ -135,15 +130,20 @@ public class MyRidesActivity extends AppCompatActivity
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                preferences.edit().putString("UserID",user.getUid()).apply();
-                USER_ID = user.getUid();
+                if (user != null) {
+                    preferences.edit().putString("UserID",user.getUid()).apply();
+                    USER_ID = user.getUid();
 
-                DatabaseReference dbUsers = FirebaseDatabase.getInstance().getReference().child("Users");
-                User dbUser = new User(user.getUid(),user.getEmail(),user.getDisplayName(),user.getProviders().get(0));
-                dbUsers.child(USER_ID).setValue(dbUser);
+                    DatabaseReference dbUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+                    User dbUser = new User(user.getUid(),user.getEmail(),user.getDisplayName(),user.getProviders().get(0));
+                    dbUsers.child(USER_ID).setValue(dbUser);
 
-                loadFragment(new HomeFragment());
-                Toast.makeText(this,"Welcome, "+user.getDisplayName(),Toast.LENGTH_SHORT).show();
+                    loadFragment(new HomeFragment());
+                    Toast.makeText(this,"Welcome, "+user.getDisplayName().split(" (?!.* )")[0],Toast.LENGTH_SHORT).show();
+
+                }
+
+
 
             }
             else{
@@ -157,6 +157,7 @@ public class MyRidesActivity extends AppCompatActivity
         dbRides.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                @SuppressLint("SimpleDateFormat")
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
                 Date dateValue;
                 java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Europe/Zagreb"));

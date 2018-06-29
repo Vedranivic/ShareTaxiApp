@@ -10,4 +10,9 @@
     <string name="dateHintText">Date</string>
     <string name="searchButtonText">Search</string>
     <string name="tvMatchingRidesText">Matching Rides</string>
+    <string name="saveText">Save</string>
+    <string name="editRideText">Edit your ride</string>
+    <string name="writeMessageHintText">Write a message…</string>
+    <string name="searchRideText">Search for a ride</string>
+    <string name="createRideText">Create a new ride</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlRidesC"
     android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:padding="@dimen/myRidesTextPadding"
-        android:text="Create a new ride"
+        android:text="@string/createRideText"
         android:textSize="@dimen/myRidesTextSize"
         />
     <RelativeLayout
@@ -23,32 +22,69 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/CreateNewRideText">
 
-        <EditText
-            android:id="@+id/etNewFrom"
+        <RelativeLayout
+            android:id="@+id/fromLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shape"
-            android:layout_margin="5dp"
-            android:textSize="16sp"
-            android:hint="@string/fromHintText"/>
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/etNewFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_shape"
+                android:layout_margin="5dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:maxLength="30"
+                android:hint="@string/fromHintText"/>
+            <Button
+                android:id="@+id/btUseMyLocationFrom"
+                android:layout_centerVertical="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/ic_location_24dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/toLayout"
+            android:layout_width="match_parent"
+            android:layout_below="@id/fromLayout"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/etNewTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etNewFrom"
-            android:background="@drawable/edittext_shape"
+            android:background="@drawable/white_shape"
             android:layout_margin="5dp"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:maxLength="30"
             android:hint="@string/toHintText"/>
+
+            <Button
+                android:id="@+id/btUseMyLocationTo"
+                android:layout_centerVertical="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/ic_location_24dp"
+                />
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/etNewPassengers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etNewTo"
-            android:background="@drawable/edittext_shape"
+            android:layout_below="@id/toLayout"
+            android:background="@drawable/white_shape"
             android:layout_margin="5dp"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:inputType="number"
             android:hint="@string/passengersHintText"/>
 
@@ -58,22 +94,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/etNewPassengers"
             android:layout_alignParentStart="true"
-            android:background="@drawable/edittext_shape"
+            android:background="@drawable/white_shape"
             android:layout_margin="5dp"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:hint="@string/dateHintText"
             android:focusable="false"
-            />
+            tools:ignore="TextFields" />
         <EditText
             android:id="@+id/etNewTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shape"
+            android:background="@drawable/white_shape"
             android:layout_toEndOf="@id/etNewDate"
             android:layout_below="@id/etNewPassengers"
             android:layout_alignParentEnd="true"
             android:layout_margin="5dp"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:inputType="time"
             android:hint="@string/timeHintText"/>
 
@@ -86,6 +124,16 @@
             android:backgroundTint="@color/colorAccent"
             android:text="@string/btCreateText"
             android:textColor="@color/colorWhite"/>
+        <TextView
+            android:id="@+id/tvCancel"
+            android:visibility="gone"
+            android:layout_below="@id/btCreateNew"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:text="@android:string/cancel"
+            android:textColor="@color/colorAccent"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 </RelativeLayout>

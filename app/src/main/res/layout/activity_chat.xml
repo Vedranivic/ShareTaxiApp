@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +7,6 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/fragment_chat_container"
         android:layout_alignParentTop="true"
         android:layout_above="@id/messageLayout"
         android:layout_width="match_parent"
@@ -17,8 +15,7 @@
             android:id="@+id/rvChat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:layout_gravity="top"
+            android:layout_gravity="bottom"
             android:elevation="@dimen/rideListElevation"
             />
     </FrameLayout>
@@ -39,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="15dp"
-            android:hint="Write a message..."
+            android:hint="@string/writeMessageHintText"
             android:maxHeight="80dp"
             />
 
@@ -51,7 +48,8 @@
             android:elevation="@dimen/bottomNavElevation"
             android:padding="4dp"
             android:src="@drawable/ic_send_24dp"
-            android:id="@+id/btSend"/>
+            android:id="@+id/btSend"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
 </RelativeLayout>

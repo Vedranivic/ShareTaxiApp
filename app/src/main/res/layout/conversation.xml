@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/rideHeight"
+    android:background="@color/colorWhite"
+    android:layout_marginTop="@dimen/rideItemMarginTop">
+    <LinearLayout
+        android:id="@+id/profileImageLayout"
+        android:orientation="vertical"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/rideImageLeftMargin"
+        android:paddingEnd="0dp"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cvProfileImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/ListBackColor"
+            android:src="@drawable/profile_default"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/llDetails"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@+id/profileImageLayout">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/addressMarginStart"
+                android:textColor="#FF444444"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/tvLastMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/addressMarginStart"
+                android:maxLength="48"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                />
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLastTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/addressMarginStart"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_toEndOf="@id/llDetails">
+
+        <ImageButton
+            android:id="@+id/ibStartChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_send_40dp"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+</RelativeLayout>
