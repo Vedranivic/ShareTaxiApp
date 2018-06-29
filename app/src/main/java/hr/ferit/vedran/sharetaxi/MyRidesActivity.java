@@ -116,10 +116,9 @@ public class MyRidesActivity extends AppCompatActivity
                     RC_SIGN_IN);
         }
         else{
-
             loadFragment(new HomeFragment());
-            Toast.makeText(this,"Welcome back, "+FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),Toast.LENGTH_SHORT).show();
-            //removeOldRides();
+            Toast.makeText(this,"Welcome back, "+FirebaseAuth.getInstance().getCurrentUser()
+                    .getDisplayName().split(" (?!.* )")[0],Toast.LENGTH_SHORT).show();
         }
     }
 
