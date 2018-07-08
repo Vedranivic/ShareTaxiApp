@@ -1,6 +1,7 @@
 package hr.ferit.vedran.sharetaxi;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -108,6 +109,7 @@ public class MyChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
                 conversation.putExtra("CHAT_ID",chatID);
                 conversation.putExtra("TITLE",holder.tvUserName.getText().toString());
                 context.startActivity(conversation);
+                ((Activity) context).finish();
             }
         });
     }

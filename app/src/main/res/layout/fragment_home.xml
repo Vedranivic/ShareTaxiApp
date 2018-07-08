@@ -18,25 +18,96 @@
         android:textSize="@dimen/myRidesTextSize"
         />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvMyRides"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvMyRides"
-        android:elevation="@dimen/rideListElevation"
-        />
+    <FrameLayout
+            android:id="@+id/myRidesContainer"
+            android:layout_below="@id/tvMyRides"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMyRides"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:elevation="@dimen/rideListElevation"
+            />
+
+        <LinearLayout
+            android:id="@+id/noMyRidesLayout"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rideHeight"
+            android:layout_gravity="top"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="20sp"
+                android:text="No rides yet?"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:text="Add"
+                android:textStyle="bold|italic"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:text=" your own and share it with others!"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvAcceptedRides"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/rvMyRides"
+        android:layout_below="@+id/myRidesContainer"
         android:padding="@dimen/myRidesTextPadding"
         android:text="@string/AcceptedRidesText"
         android:textSize="@dimen/myRidesTextSize"
         />
+
+    <LinearLayout
+        android:id="@+id/noAcceptedRidesLayout"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rideHeight"
+        android:layout_below="@id/tvAcceptedRides"
+        android:gravity="center"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        android:text="Looking for a ride?"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="Search"
+            android:textStyle="bold|italic"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text=" for a ride and get in touch!"/>
+    </LinearLayout>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAcceptedRides"

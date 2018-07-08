@@ -42,6 +42,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
@@ -93,6 +94,7 @@ public class CreateFragment extends Fragment{
         if(getArguments()!=null) {
             editingMode = true;
             startEditingRide(getArguments().getString("Ride_ID"));
+            setArguments(null);
         }
         else {
             editingMode = false;
@@ -102,18 +104,20 @@ public class CreateFragment extends Fragment{
 
     private void startEditingRide(final String RIDE_ID) {
         tvAction.setText(R.string.editRideText);
-        btCreate.setText(getResources().getString(R.string.fui_button_text_save));
+        btCreate.setText(R.string.saveText);
         tvCancel.setVisibility(View.VISIBLE);
         dbRides = FirebaseDatabase.getInstance().getReference().child("Rides").child(RIDE_ID);
         dbRides.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 rideToEdit = dataSnapshot.getValue(Ride.class);
-                etFrom.setText(rideToEdit.getFrom());
-                etTo.setText(rideToEdit.getTo());
-                etPassengers.setText(rideToEdit.getPassengers());
-                etDate.setText(rideToEdit.getDate());
-                etTime.setText(rideToEdit.getTime());
+                if(rideToEdit != null) {
+                    etFrom.setText(rideToEdit.getFrom());
+                    etTo.setText(rideToEdit.getTo());
+                    etPassengers.setText(rideToEdit.getPassengers());
+                    etDate.setText(rideToEdit.getDate());
+                    etTime.setText(rideToEdit.getTime());
+                }
             }
 
             @Override
@@ -253,7 +257,7 @@ public class CreateFragment extends Fragment{
             rideToEdit.setTo(to);
             rideToEdit.setPassengers(passengers);
             rideToEdit.setDate(date);
-            rideToEdit.setTime(time);
+            rideToEdit.setTime(extraValidateTime(time));
             dbRides.setValue(rideToEdit);
             returnHome();
             Toast.makeText(context,"Your ride has been updated",Toast.LENGTH_SHORT).show();
@@ -281,11 +285,13 @@ public class CreateFragment extends Fragment{
         FirebaseUser owner = FirebaseAuth.getInstance().getCurrentUser();
 
         if(validateInput(from, to, passengers, date, time)){
-            DatabaseReference databaseReference;
-            databaseReference = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             try{
                 String id = databaseReference.child("Rides").push().getKey();
-                Ride ride = new Ride(id,from,to,passengers,date,time, owner.getUid(),owner.getDisplayName(),null);
+                Ride ride = new Ride(
+                        id,from,to,passengers,date,extraValidateTime(time),
+                        owner.getUid(),owner.getDisplayName(),null
+                );
                 databaseReference.child("Rides").child(id).setValue(ride);
                 returnHome();
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
@@ -301,7 +307,9 @@ public class CreateFragment extends Fragment{
                 //Toast.makeText(getContext(),"Your ride has been posted.",Toast.LENGTH_SHORT).show();
             }
             catch (Exception e){
-                Toast.makeText(getContext(),"Data could not be written. Try again later.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Data could not be written. Try again later.",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
         }
     }
@@ -316,27 +324,33 @@ public class CreateFragment extends Fragment{
         }
         //Check address differing
         if (from.equals(to) && inputOK) {
-            Toast.makeText(getContext(), "'From' address and 'To' address should differ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "'From' address and 'To' address should differ",
+                    Toast.LENGTH_SHORT)
+                    .show();
             inputOK = false;
         }
         //Check number of passengers
         try {
             if (inputOK) {
                 int passengersNumber = Integer.parseInt(passengers);
-                if (passengersNumber >= 9) {
-                    Toast.makeText(getContext(), "Number of passengers exceeds maximal number of passengers per ride", Toast.LENGTH_LONG).show();
-                    inputOK = false;
+                int acceptedNumber;
+                if(rideToEdit != null){
+                    acceptedNumber = rideToEdit.getPassengerList().size();
                 }
-                if (passengersNumber < 1){
-                    Toast.makeText(getContext(), "There has to be at least one passenger (owner) for a ride", Toast.LENGTH_LONG).show();
-                    inputOK = false;
+                else{
+                    acceptedNumber = 0;
                 }
-                if (rideToEdit!=null){
-                    int acceptedNumber = rideToEdit.getPassengerList().size();
-                    if(passengersNumber < acceptedNumber + 1){
-                        Toast.makeText(getContext(), "There has to be at least one passenger (owner) for a ride, along with the passengers who accepted the ride", Toast.LENGTH_LONG).show();
-                        inputOK = false;
-                    }
+                if (passengersNumber - acceptedNumber > 7 || passengersNumber > 8) {
+                    //Toast.makeText(getContext(), "Number of passengers exceeds\nmaximal number of passengers per ride", Toast.LENGTH_LONG).show();
+                    inputOK = false;
+                    etPassengers.setError("Maximal number of passengers per ride is 7 (taxi van with 8 seats) considering that at least 1 other passenger will accept your ride");
+                    etPassengers.requestFocus();
+                }
+                if (passengersNumber - acceptedNumber < 1) {
+                    //Toast.makeText(getContext(), "There has to be at least one passenger (owner) for a ride, along with the other passengers who accepted the ride", Toast.LENGTH_LONG).show();
+                    inputOK = false;
+                    etPassengers.setError("There has to be at least 1 passenger (owner) for a ride, along with the other passengers who accepted the ride (currently: " + String.valueOf(acceptedNumber)+")");
+                    etPassengers.requestFocus();
                 }
             }
         } catch (NumberFormatException e) {
@@ -346,26 +360,51 @@ public class CreateFragment extends Fragment{
         //Check date and time
         try {
             if (inputOK) {
-                @SuppressLint("SimpleDateFormat")
-                DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
-                Date dateValue = formatter.parse(date + " " + time);
-                java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Europe/Zagreb"));
-                Calendar calCurrent = Calendar.getInstance();
-                Calendar calChosen = Calendar.getInstance();
-
-                calChosen.setTime(dateValue);
-
-                if (calChosen.before(calCurrent)) {
-                    Toast.makeText(getContext(), "Please enter a valid time (non-past value)", Toast.LENGTH_SHORT).show();
+                time = extraValidateTime(time);
+                if(time==null){
+                    //Toast.makeText(getContext(),"Please enter time in valid format", Toast.LENGTH_SHORT).show();
                     inputOK = false;
+                    etTime.setError("Valid time format is HH:mm (0-24)");
+                    etTime.requestFocus();
+                }
+                else {
+                    @SuppressLint("SimpleDateFormat")
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                    Date dateValue = formatter.parse(date + " " + time);
+                    java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Europe/Zagreb"));
+                    Calendar calCurrent = Calendar.getInstance();
+                    Calendar calChosen = Calendar.getInstance();
+
+                    calChosen.setTime(dateValue);
+
+                    if (calChosen.before(calCurrent)) {
+                        Toast.makeText(getContext(), "Please enter valid date and time (non-past value)", Toast.LENGTH_SHORT).show();
+                        inputOK = false;
+                    }
                 }
             }
         }
         catch (Exception e){
-            Toast.makeText(getContext(),"Please enter time in valid format (hh:mm)",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"Please enter time in valid format (hh:mm)",Toast.LENGTH_SHORT).show();
             inputOK = false;
+            etTime.setError("Valid time format is HH:mm (0-24)");
+            etTime.requestFocus();
         }
         return inputOK;
+    }
+
+    private String extraValidateTime(String time) {
+        String HH = time.split(":")[0];
+        String mm = time.split(":")[1];
+        if(Integer.parseInt(HH) > 23 || Integer.parseInt(mm) > 59){
+            return null;
+        }
+        else {
+            if(String.valueOf(HH).length()==1) HH = "0"+HH;
+            if(String.valueOf(mm).length()==1) mm = "0"+mm;
+            return HH+":"+mm;
+
+        }
     }
 
     //Displaying Fragment with DatePicker for setting the date value

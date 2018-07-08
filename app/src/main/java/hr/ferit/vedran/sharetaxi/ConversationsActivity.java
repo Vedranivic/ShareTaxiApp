@@ -49,7 +49,10 @@ public class ConversationsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            startActivity(new Intent(getApplicationContext(),MyRidesActivity.class));
+            Intent homeIntent = new Intent(getApplicationContext(),MyRidesActivity.class);
+            homeIntent.putExtra("hasJustStarted",true);
+            startActivity(homeIntent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -70,7 +73,7 @@ public class ConversationsActivity extends AppCompatActivity {
                         myChats.add(chat);
                     }
                 }
-                myChatsAdapter = new MyChatsAdapter(getApplicationContext(),myChats);
+                myChatsAdapter = new MyChatsAdapter(ConversationsActivity.this,myChats);
                 rvMyChats.setAdapter(myChatsAdapter);
             }
 

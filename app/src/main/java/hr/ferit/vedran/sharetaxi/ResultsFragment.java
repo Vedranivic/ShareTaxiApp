@@ -3,6 +3,7 @@ package hr.ferit.vedran.sharetaxi;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hr.ferit.vedran.sharetaxi.model.Ride;
 
 
@@ -31,9 +35,11 @@ public class ResultsFragment extends Fragment {
 
     @BindView(R.id.rvMatchingRides)
     RecyclerView rvMatchingRides;
+    @BindView(R.id.tvMatchingRides) TextView tvMatchingRides;
+    @BindView(R.id.noMatchingRidesLayout) LinearLayout noMatchingRidesLayout;
+    @BindView(R.id.tvCreate) TextView tvCreate;
     private DatabaseReference databaseReference;
     private List<Ride> matchingRides;
-
 
     @Nullable
     @Override
@@ -70,6 +76,7 @@ public class ResultsFragment extends Fragment {
                         matchingRides.add(rideSnap.getValue(Ride.class));
                     }
                 }
+
                 MyRidesAdapter rvMatchingRidesAdapter = new MyRidesAdapter(getContext(), matchingRides);
                 changeItemLayout(rvMatchingRidesAdapter);
                 rvMatchingRides.setAdapter(rvMatchingRidesAdapter);
@@ -88,5 +95,25 @@ public class ResultsFragment extends Fragment {
         adapter.ibEditVisibility = View.GONE;
         adapter.ibAcceptVisibility = View.VISIBLE;
         adapter.ibSendVisibility = View.GONE;
+
+        if(matchingRides!=null) {
+            if (matchingRides.isEmpty()) {
+                noMatchingRidesLayout.setVisibility(View.VISIBLE);
+                tvMatchingRides.setVisibility(View.INVISIBLE);
+            } else {
+                noMatchingRidesLayout.setVisibility(View.INVISIBLE);
+                tvMatchingRides.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    @OnClick(R.id.tvCreate)
+    public void addNewRide(){
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new CreateFragment())
+                .commit();
+        BottomNavigationView navigation = getActivity().findViewById(R.id.bottomNav);
+        navigation.setSelectedItemId(R.id.navigation_create);
     }
 }

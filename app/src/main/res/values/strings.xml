@@ -15,4 +15,5 @@
     <string name="writeMessageHintText">Write a message…</string>
     <string name="searchRideText">Search for a ride</string>
     <string name="createRideText">Create a new ride</string>
+    <string name="cancelButtonText">Cancel</string>
 </resources>

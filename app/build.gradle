@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'ShareTaxiKey'
+            keyPassword 'LjJk.673'
+            storeFile file('C:/Android/Keystore.jks')
+            storePassword 'LjJk.673'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "hr.ferit.vedran.sharetaxi"
@@ -14,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     buildToolsVersion '27.0.3'
@@ -23,16 +32,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-
     implementation 'com.android.support:design:27.1.1'
     //Circle ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -44,9 +49,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.android.gms:play-services-analytics:16.0.1'
-    implementation "com.google.android.gms:play-services-tagmanager:16.0.1"
+    implementation 'com.google.android.gms:play-services-tagmanager:16.0.1'
     //Location
     implementation 'com.google.android.gms:play-services-location:15.0.1'
-
 }
 apply plugin: 'com.google.gms.google-services'

@@ -68,6 +68,7 @@ public class MyRidesActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.btChat) {
             startActivity(new Intent(getApplicationContext(),ConversationsActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -117,8 +118,10 @@ public class MyRidesActivity extends AppCompatActivity
         }
         else{
             loadFragment(new HomeFragment());
-            Toast.makeText(this,"Welcome back, "+FirebaseAuth.getInstance().getCurrentUser()
-                    .getDisplayName().split(" (?!.* )")[0],Toast.LENGTH_SHORT).show();
+            if(getIntent().getExtras()==null) {
+                Toast.makeText(this, "Welcome back, " + FirebaseAuth.getInstance().getCurrentUser()
+                        .getDisplayName().split(" (?!.* )")[0], Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

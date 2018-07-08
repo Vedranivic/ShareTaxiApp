@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,6 @@ public class ChatActivity extends AppCompatActivity {
     @BindView(R.id.etMessage)
     EditText etMessage;
     private String chatID;
-    private LinearLayoutManager chatLLM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class ChatActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getMessages();
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
@@ -61,11 +62,16 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             startActivity(new Intent(getApplicationContext(),ConversationsActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void getMessages() {
+        final LinearLayoutManager chatLLM = new LinearLayoutManager(this);
+        chatLLM.setOrientation(LinearLayoutManager.VERTICAL);
+        chatLLM.setStackFromEnd(true);
+        rvChat.setLayoutManager(chatLLM);
         DatabaseReference dbMessages = FirebaseDatabase.getInstance().getReference().child("Messages").child(chatID);
         final FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder> messagesAdapter;
         messagesAdapter = new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(
@@ -99,17 +105,17 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         };
+        
         //scroll rv to the last item added
         messagesAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                rvChat.smoothScrollToPosition(positionStart);
+                Log.e("ITEM COUNT:","____ = "+rvChat.getAdapter().getItemCount());
+                chatLLM.scrollToPositionWithOffset(positionStart,0);
+                //rvChat.smoothScrollToPosition(positionStart);
             }
         });
-        chatLLM = new LinearLayoutManager(this);
-        chatLLM.setStackFromEnd(true);
-        rvChat.setLayoutManager(chatLLM);
         rvChat.setAdapter(messagesAdapter);
     }
 

@@ -23,8 +23,12 @@
           }
         },
         {
-          "client_id": "305138825685-ehsj2vi7i4p080l14v8r113qhtnf4l07.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "305138825685-hpf72k0eggor80332909m0g0uvqskbcu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hr.ferit.vedran.sharetaxi",
+            "certificate_hash": "4b0d68d249a18db32886d579887e47ae12307af7"
+          }
         },
         {
           "client_id": "305138825685-ehsj2vi7i4p080l14v8r113qhtnf4l07.apps.googleusercontent.com",

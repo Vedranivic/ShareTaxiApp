@@ -1,6 +1,7 @@
 package hr.ferit.vedran.sharetaxi;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hr.ferit.vedran.sharetaxi.model.Ride;
 
 
@@ -30,6 +34,10 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.rvMyRides) RecyclerView rvMyRides;
     @BindView(R.id.rvAcceptedRides) RecyclerView rvAcceptedRides;
+    @BindView(R.id.tvAdd) TextView tvAdd;
+    @BindView(R.id.noMyRidesLayout) LinearLayout noMyRidesLayout;
+    @BindView(R.id.noAcceptedRidesLayout) LinearLayout noAcceptedRidesLayout;
+    @BindView(R.id.tvSearch) TextView tvSearch;
     private DatabaseReference databaseReference;
     private List<Ride> myRides;
     private List<Ride> acceptedRides;
@@ -95,6 +103,7 @@ public class HomeFragment extends Fragment {
                             acceptedRides.add(rideSnap.getValue(Ride.class));
                         }
                 }
+
                 MyRidesAdapter rvAcceptedRidesAdapter = new MyRidesAdapter(getContext(), acceptedRides);
                 changeItemLayout(rvAcceptedRidesAdapter, R.id.rvAcceptedRides );
                 rvAcceptedRides.setAdapter(rvAcceptedRidesAdapter);
@@ -122,6 +131,40 @@ public class HomeFragment extends Fragment {
             adapter.ibEditVisibility = View.GONE;
             adapter.ibAcceptVisibility = View.GONE;
         }
+        if(acceptedRides!=null) {
+            if (acceptedRides.isEmpty()) {
+                noAcceptedRidesLayout.setVisibility(View.VISIBLE);
+            } else {
+                noAcceptedRidesLayout.setVisibility(View.INVISIBLE);
+            }
+        }
+        if(myRides!=null) {
+            if (myRides.isEmpty()) {
+                noMyRidesLayout.setVisibility(View.VISIBLE);
+            } else {
+                noMyRidesLayout.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    @OnClick(R.id.tvAdd)
+    public void addNewRide(){
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new CreateFragment())
+                .commit();
+        BottomNavigationView navigation = getActivity().findViewById(R.id.bottomNav);
+        navigation.setSelectedItemId(R.id.navigation_create);
+    }
+
+    @OnClick(R.id.tvSearch)
+    public void searchForRide(){
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new SearchFragment())
+                .commit();
+        BottomNavigationView navigation = getActivity().findViewById(R.id.bottomNav);
+        navigation.setSelectedItemId(R.id.navigation_search);
     }
 
 }
