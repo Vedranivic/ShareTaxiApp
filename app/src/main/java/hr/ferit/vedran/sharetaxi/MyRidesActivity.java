@@ -111,7 +111,7 @@ public class MyRidesActivity extends AppCompatActivity
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
-                            .setLogo(R.drawable.taxi_logo)
+                            .setLogo(R.drawable.share_taxi_logo)
                             .setTheme(R.style.SignInTheme)
                             .build(),
                     RC_SIGN_IN);

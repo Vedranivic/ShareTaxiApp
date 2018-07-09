@@ -16,4 +16,10 @@
     <string name="searchRideText">Search for a ride</string>
     <string name="createRideText">Create a new ride</string>
     <string name="cancelButtonText">Cancel</string>
+    <string name="NoRidesText1">No rides yet?</string>
+    <string name="NoRidesText2">Add&#x20;</string>
+    <string name="NoRidesText3">&#x20;your own and share it with others!</string>
+    <string name="NoneAcceptedText1">Looking for a ride?</string>
+    <string name="NoneAcceptedText2">Search&#x20;</string>
+    <string name="NoneAcceptedText3">&#x20;for a ride and get in touch!</string>
 </resources>

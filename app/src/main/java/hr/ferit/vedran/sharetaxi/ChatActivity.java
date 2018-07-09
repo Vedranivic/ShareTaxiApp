@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -105,18 +106,18 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         };
-        
+
         //scroll rv to the last item added
         messagesAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                Log.e("ITEM COUNT:","____ = "+rvChat.getAdapter().getItemCount());
                 chatLLM.scrollToPositionWithOffset(positionStart,0);
                 //rvChat.smoothScrollToPosition(positionStart);
             }
         });
         rvChat.setAdapter(messagesAdapter);
+
     }
 
     @OnClick(R.id.btSend)
