@@ -18,3 +18,26 @@ The app uses a variety of functionalities which results in a lot of different po
 
 ## Instructions
 Start by registering as the app's user either by email and password or with an existing Gmail account. After a successful login choose between searching for a ride and accepting the one that suits you or post your own ride and wait for someone to accept it. After accepting someone's ride/having your ride accepted by another user get in touch with the other user through app's chat functionality - sending direct messages to arrange details. When creating a ride, editing your own or searching for an existing one, feel free to use the geolocating functionality (small location icons in FROM and TO fields) which will automatically fetch your location and turn it into address. Enjoy!
+
+## Screenshots
+<div>
+  <kbd>
+ <img src="/screenshots/1.png" width = "216" height = "384"/>
+ 
+ <img src="/screenshots/2.png" width = "216" height = "384"/>
+ 
+ <img src="/screenshots/3.png" width = "216" height = "384"/>
+
+ <img src="/screenshots/4.png" width = "216" height = "384"/>
+
+ <img src="/screenshots/5.png" width = "216" height = "384" />
+
+ <img src="/screenshots/6.png" width = "216" height = "384" />
+
+ <img src="/screenshots/7.png" width = "216" height = "384" />
+
+ <img src="/screenshots/8.png" width = "216" height = "384" />
+
+ <img src="/screenshots/9.png" width = "216" height = "384" />
+ </kbd>
+ </div>
