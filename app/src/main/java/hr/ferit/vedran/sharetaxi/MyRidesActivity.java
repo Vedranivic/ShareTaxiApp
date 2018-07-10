@@ -142,53 +142,11 @@ public class MyRidesActivity extends AppCompatActivity
 
                     loadFragment(new HomeFragment());
                     Toast.makeText(this,"Welcome, "+user.getDisplayName().split(" (?!.* )")[0],Toast.LENGTH_SHORT).show();
-
                 }
-
-
-
             }
             else{
                 Toast.makeText(this, "Error: Sign in failed",Toast.LENGTH_SHORT).show();
             }
         }
     }
-
-    private void removeOldRides() {
-        final DatabaseReference dbRides = FirebaseDatabase.getInstance().getReference().child("Rides");
-        dbRides.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                @SuppressLint("SimpleDateFormat")
-                DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
-                Date dateValue;
-                java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Europe/Zagreb"));
-                Calendar calCurrent;
-                Calendar calRide;
-                for(DataSnapshot rideSnap : dataSnapshot.getChildren()){
-                    Ride ride = rideSnap.getValue(Ride.class);
-                    try {
-                        dateValue = formatter.parse(ride.getDate() + " " + ride.getTime());
-                        calCurrent = Calendar.getInstance();
-                        calRide = Calendar.getInstance();
-                        calRide.setTime(dateValue);
-                        if (calCurrent.before(calRide)) {
-                            Log.e("CURRENT",calCurrent.toString());
-                            Log.e("RIDECAL",calRide.toString());
-                            //dbRides.child(ride.getId()).removeValue();
-                        }
-                    }
-                    catch (Exception e){
-                        Log.e("DATETIME PARSE ERROR","Error while parsing date and time");
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("ERROR_REMOVING","Error while removing old rides");
-            }
-        });
-    }
-
 }
