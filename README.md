@@ -3,6 +3,8 @@
 
 Share Taxi is an app that enables a user to search for an existing of offer his own taxi ride so that he could share a taxi ride with someone, which leads to cheaper taxi rides. The user logs into app with his/her account and can post his own ride and/or search for someone else's ride that suits him. Once a user accepts another user's ride they can communicate using the app's chat functionality to arrange details. The app uses realtime database for rides, users, messages and chat functionalities as well as geolocationg services for quick address retrieving.
 
+[APK DOWNLOAD LINK](https://drive.google.com/open?id=1U-VbhAXdnAnBf3ma3ciFHWAg6f5xrhbT)
+
 ### Major challenges
 The app uses a variety of functionalities which results in a lot of different possible approaches. For the realtime database handling Firebase Realtime Database was used. Also, the user authentication functionality is handled through Firebase Authentication. 
 
